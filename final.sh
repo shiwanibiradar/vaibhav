@@ -93,3 +93,37 @@ then
         rm -rf ./docker-workshop
         rm -rf ./task.txt
 	
+elif [ $tsk = 4 ];
+then
+        score=0
+        echo "Enter your name"
+        read name
+        echo "Enter your email"
+        read email
+        echo "Enter you college name"
+        read college
+
+        echo "Name:$name" > task.txt
+        echo "Email:$email" >> task.txt
+        echo "College_Name:$college" >> task.txt
+
+	if [ "$(docker ps | grep wordpress)" > 1 ] && [ "$(docker ps | grep mysql)" > 1 ];
+	then
+		echo "wordpress-mysql launch succesfully"
+		(( score += 10 ))
+	else
+		echo "wordpress-mysql launch falied"
+	fi
+	echo "Marks: $score"
+        echo "Marks: $score" >> task.txt
+
+        echo "welcome to docker-workshop" >> ./docker-workshop
+        openssl aes-256-cbc -pass file:"./docker-workshop" -a -md md5 -salt -in ./task.txt -out ./task4.txt
+
+        rm -rf ./docker-workshop
+        rm -rf ./task.txt
+
+else
+        echo "This is not valid task"
+        sh run.sh
+fi
